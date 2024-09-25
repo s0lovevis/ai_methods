@@ -8,9 +8,10 @@ def call_second_api(user_text):
     querystring = {"text": user_text}
 
     headers = {
-        "x-rapidapi-key": "9b8410daa8msh3cacb37a08e9e76p13691ejsn9589d3ec3c26",
+        "x-rapidapi-key": "7c7d5d8398msh3d98ba8e537eaeap1fd852jsn425292850301",
         "x-rapidapi-host": "sentiment-analyzer3.p.rapidapi.com"
     }
+
 
     response = requests.get(url, headers=headers, params=querystring).json()
 

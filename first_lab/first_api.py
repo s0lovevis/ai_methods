@@ -12,7 +12,7 @@ def call_first_api(user_text):
         }
     ]
     headers = {
-        "x-rapidapi-key": "9b8410daa8msh3cacb37a08e9e76p13691ejsn9589d3ec3c26",
+        "x-rapidapi-key": "7c7d5d8398msh3d98ba8e537eaeap1fd852jsn425292850301",
         "x-rapidapi-host": "sentiment-analysis9.p.rapidapi.com",
         "Content-Type": "application/json",
         "Accept": "application/json"
