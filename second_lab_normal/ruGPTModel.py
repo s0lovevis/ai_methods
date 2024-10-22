@@ -1,3 +1,4 @@
+import json
 from transformers import GPT2Tokenizer, GPT2LMHeadModel
 from typing import List, Optional
 
@@ -11,24 +12,25 @@ class ruGPTModel:
         """
         self.tokenizer = GPT2Tokenizer.from_pretrained(model_name_or_path)
         self.model = GPT2LMHeadModel.from_pretrained(model_name_or_path)
+        self.config = self.load_config()
 
-    def generate(self, text: str,
-                 do_sample: bool = True, max_length: int = 100, repetition_penalty: float = 5.0,
-                 top_k: int = 5, top_p: float = 0.95, temperature: float = 0.8,
-                 num_beams: int = 10, no_repeat_ngram_size: int = 3) -> str:
+    def load_config(self) -> dict:
         """
-        Генерация продолжения входящего текста
+        Загрузка конфигурации из файла model_config.json.
+
+        Returns:
+            dict: Словарь с параметрами конфигурации.
+        """
+        with open('.\\model_config.json', 'r') as file:
+            config = json.load(file)
+        return config
+
+    def generate(self, text: str) -> str:
+        """
+        Генерация текста на основе входного текста.
 
         Args:
             text (str): Входной текст для генерации.
-            do_sample (bool, optional): Флаг для использования сэмплинга. По умолчанию True.
-            max_length (int, optional): Максимальная длина генерируемого текста. По умолчанию 60.
-            repetition_penalty (float, optional): Штраф за повторение. По умолчанию 5.0.
-            top_k (int, optional): Количество топ-k токенов для сэмплинга. По умолчанию 5.
-            top_p (float, optional): Параметр для сэмплинга с учетом вероятности. По умолчанию 0.95.
-            temperature (float, optional): Температура для сэмплинга. По умолчанию 0.8.
-            num_beams (int, optional): Количество лучей для поиска. По умолчанию 10.
-            no_repeat_ngram_size (int, optional): Размер n-граммы для предотвращения повторений. По умолчанию 3.
 
         Returns:
             str: Сгенерированный текст.
@@ -37,11 +39,14 @@ class ruGPTModel:
 
         out = self.model.generate(
             input_ids,
-            max_length=max_length,
-            repetition_penalty=repetition_penalty,
-            do_sample=do_sample,
-            top_k=top_k, top_p=top_p, temperature=temperature,
-            num_beams=num_beams, no_repeat_ngram_size=no_repeat_ngram_size
+            max_length=self.config["max_length"],
+            repetition_penalty=self.config["repetition_penalty"],
+            do_sample=self.config["do_sample"],
+            top_k=self.config["top_k"],
+            top_p=self.config["top_p"],
+            temperature=self.config["temperature"],
+            num_beams=self.config["num_beams"],
+            no_repeat_ngram_size=self.config["no_repeat_ngram_size"]
         )
 
         return list(map(self.tokenizer.decode, out))[0]
