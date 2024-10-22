@@ -6,6 +6,11 @@ from ruGPTModel import ruGPTModel
 # Глобальные переменные
 model_name: str = "sberbank-ai/rugpt3small_based_on_gpt2"
 model: ruGPTModel = None
+root: tk.Tk = None
+generate_button: ttk.Button = None
+input_text_widget: tk.Text = None
+output_text_widget: tk.Text = None
+time_label: ttk.Label = None
 
 # Функция для генерации текста
 def generate_text() -> None:
@@ -36,15 +41,16 @@ def generate_text() -> None:
     generate_button.config(state="normal", text="Сгенерировать текст")
 
 # Функция для создания графического интерфейса
-def create_gui(root: tk.Tk) -> None:
+def create_gui(root_window: tk.Tk) -> None:
     """
     Функция для создания графического интерфейса.
 
     Args:
-        root (tk.Tk): Основное окно приложения.
+        root_window (tk.Tk): Основное окно приложения.
     """
-    global generate_button, input_text_widget, output_text_widget, time_label
+    global root, generate_button, input_text_widget, output_text_widget, time_label
 
+    root = root_window
     root.title("Приложение для генерации текста")
 
     # Выбор модели
