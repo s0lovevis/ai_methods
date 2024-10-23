@@ -3,7 +3,7 @@ from tkinter import ttk, messagebox
 import time
 from ruGPTModel import ruGPTModel
 
-# Глобальные переменные
+# Блоки интерфейса кладем в глобальные переменные
 model_name: str = "sberbank-ai/rugpt3small_based_on_gpt2"
 model: ruGPTModel = None
 root: tk.Tk = None
@@ -12,7 +12,7 @@ input_text_widget: tk.Text = None
 output_text_widget: tk.Text = None
 time_label: ttk.Label = None
 
-# Функция для генерации текста
+
 def generate_text() -> None:
     """
     Функция для генерации текста на основе входного текста.
@@ -40,6 +40,13 @@ def generate_text() -> None:
     time_label.config(text=f"Генерация заняла {round(gen_end-gen_start, 2)} секунд")
     generate_button.config(state="normal", text="Сгенерировать текст")
 
+def update_model_name(*args) -> None:
+    """
+    Функция для обновления выбранной модели.
+    """
+    global model_name
+    model_name = model_var.get()
+
 # Функция для создания графического интерфейса
 def create_gui(root_window: tk.Tk) -> None:
     """
@@ -48,7 +55,7 @@ def create_gui(root_window: tk.Tk) -> None:
     Args:
         root_window (tk.Tk): Основное окно приложения.
     """
-    global root, generate_button, input_text_widget, output_text_widget, time_label
+    global root, generate_button, input_text_widget, output_text_widget, time_label, model_var
 
     root = root_window
     root.title("Приложение для генерации текста")
@@ -64,6 +71,7 @@ def create_gui(root_window: tk.Tk) -> None:
     ]
 
     model_var = tk.StringVar(value=models[0])
+    model_var.trace("w", update_model_name)
     for model in models:
         ttk.Radiobutton(model_frame, text=model, variable=model_var, value=model).pack(anchor="w")
 
