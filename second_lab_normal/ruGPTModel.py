@@ -48,5 +48,16 @@ class ruGPTModel:
             num_beams=self.config["num_beams"],
             no_repeat_ngram_size=self.config["no_repeat_ngram_size"]
         )
-
+        print(list(map(self.tokenizer.decode, out))[0])
         return list(map(self.tokenizer.decode, out))[0]
+
+
+models = [
+    "sberbank-ai/rugpt3small_based_on_gpt2",
+    "sberbank-ai/rugpt3medium_based_on_gpt2",
+    "sberbank-ai/rugpt3large_based_on_gpt2"
+]
+
+gpt = ruGPTModel(models[1])
+gpt.load_config()
+gpt.generate("Библиотека OpenCV является очень полезным инструментом в исследованиях по компьютерному зрению")

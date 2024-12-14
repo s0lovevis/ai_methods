@@ -6,9 +6,9 @@ class ruGPTModel:
         self.model = GPT2LMHeadModel.from_pretrained(model_name_or_path)
 
     def generate(self, text,
-                 do_sample=True, max_length=60, repetition_penalty=5.0,
-                 top_k=5, top_p=0.95, temperature=0.8,
-                 num_beams=10, no_repeat_ngram_size=3):
+                 do_sample=True, max_length=50, repetition_penalty=5.0,
+                 top_k=20, top_p=0.5, temperature=0.8,
+                 num_beams=15, no_repeat_ngram_size=3):
         
         input_ids = self.tokenizer.encode(text, return_tensors="pt")
 
