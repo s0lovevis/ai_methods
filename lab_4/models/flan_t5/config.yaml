@@ -1,0 +1,6 @@
+model_name: "google/flan-t5-large"
+generation_params:
+  min_length: 150
+  max_length: 350
+  temperature: 0.9
+  top_p: 0.9
