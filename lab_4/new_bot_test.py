@@ -9,7 +9,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Токен Telegram-бота
-TELEGRAM_TOKEN = "7604679620:AAFb9Gs3wCca1PEcLMF4j8ENfNaqbfhgddQ"
+TELEGRAM_TOKEN = ""
 
 # Инициализация бота и диспетчера
 bot = Bot(token=TELEGRAM_TOKEN)
